@@ -3,7 +3,6 @@ package com.moviedb.practice_movie.repository
 import com.moviedb.practice_movie.data.movie_details.Movie_Details
 import com.moviedb.practice_movie.data.movie_popular.Movie_Popular
 import com.moviedb.practice_movie.network.WebServices
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

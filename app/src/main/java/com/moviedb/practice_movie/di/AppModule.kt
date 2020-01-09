@@ -4,6 +4,7 @@ import com.moviedb.practice_movie.MovieViewModelFactory
 import com.moviedb.practice_movie.common.Constants
 import com.moviedb.practice_movie.network.WebServices
 import com.moviedb.practice_movie.repository.MovieRepository
+import com.moviedb.practice_movie.repository.MovieRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -18,13 +19,13 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideWebServices(retrofit:Retrofit):WebServices{
+    fun provideWebServices(retrofit: Retrofit): WebServices {
         return retrofit.create(WebServices::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient):Retrofit{
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
@@ -35,7 +36,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpCient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient{
+    fun provideOkHttpCient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .build()
@@ -43,7 +44,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideHttpInterceptor():HttpLoggingInterceptor{
+    fun provideHttpInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -51,7 +52,13 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideMovieFactory(movieRepository: MovieRepository): MovieViewModelFactory {
+    fun provideMovieRepository(webServices: WebServices): MovieRepository {
+        return MovieRepositoryImpl(webServices)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieViewModelFactory(movieRepository: MovieRepository): MovieViewModelFactory {
         return MovieViewModelFactory(movieRepository)
     }
 
