@@ -2,14 +2,18 @@ package com.moviedb.practice_movie.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.moviedb.practice_movie.MovieViewModelFactory
 import com.moviedb.practice_movie.PopularMovieViewModel
 import com.moviedb.practice_movie.R
 import com.moviedb.practice_movie.data.movie_popular.Movie_Popular
+import com.moviedb.practice_movie.data.movie_popular.Results
 import com.moviedb.practice_movie.di.AppModule
 import com.moviedb.practice_movie.di.DaggerAppComponent
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -28,10 +32,20 @@ class MainActivity : AppCompatActivity() {
             .inject(this)
 
         popularMovieViewModel = ViewModelProviders.of(this,movieViewModelFactory).get(PopularMovieViewModel::class.java)
-        popularMovieViewModel.moviepopular.observe(this,Observer<Movie_Popular>{movie ->
-
-        })
-
         popularMovieViewModel.getMoviePopular()
+        popularMovieViewModel.moviepopular.observe(this,Observer<Movie_Popular>{movie ->
+            Log.d("movieTitle", movie.results[1].original_title)
+            movieAdapter(movie)
+        })
+    }
+
+    private fun movieAdapter(movie:Movie_Popular){
+        val adapter = MovieAdapter(movie,object:OnMovieClickListener{
+            override fun onMovieClicked(results: Results) {
+
+            }
+        })
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
     }
 }

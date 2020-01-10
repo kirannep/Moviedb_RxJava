@@ -9,22 +9,22 @@ import com.moviedb.practice_movie.repository.MovieRepository
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class PopularMovieViewModel @Inject constructor(private val movieRepository: MovieRepository):ViewModel() {
+class PopularMovieViewModel @Inject constructor(private val movieRepository: MovieRepository) :
+    ViewModel() {
 
-    val moviepopular:MutableLiveData<Movie_Popular> = MutableLiveData()
+    val moviepopular: MutableLiveData<Movie_Popular> = MutableLiveData()
     private val compositeDisposable = CompositeDisposable()
-    val error:MutableLiveData<String> = MutableLiveData()
+    val error: MutableLiveData<String> = MutableLiveData()
 
-    fun getMoviePopular(){
+    fun getMoviePopular() {
         compositeDisposable.add(
             movieRepository.getMoviesPopular(Constants.API_KEY)
                 .subscribe({ movies ->
-                moviepopular.value = movies
-                    Log.d("firstTitle",movies)
-            },{error.value = it.localizedMessage
+                    moviepopular.value = movies
+                }, {
+                    error.value = it.localizedMessage
                 }
                 )
-
         )
     }
 }
