@@ -2,22 +2,28 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="250dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:layout_width="320dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center">
+
         <TextView
             android:id="@+id/movie_title_tv"
-            android:layout_width="86dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="44dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
+            android:layout_width="137dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="92dp"
+            android:layout_marginTop="16dp"
+            android:textAlignment="center"
+            android:textColorHint="@color/cardview_shadow_end_color"
+            android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="TextView" />
@@ -26,12 +32,10 @@
             android:id="@+id/movie_iv"
             android:layout_width="123dp"
             android:layout_height="102dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="100dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movie_title_tv"
-            tools:srcCompat="@tools:sample/avatars[1]"
-            android:layout_marginBottom="20dp"/>
+            tools:srcCompat="@tools:sample/avatars[1]" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.cardview.widget.CardView>

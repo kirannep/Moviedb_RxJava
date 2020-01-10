@@ -1,11 +1,12 @@
 package com.moviedb.practice_movie.view
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.moviedb.practice_movie.MovieViewModelFactory
 import com.moviedb.practice_movie.PopularMovieViewModel
 import com.moviedb.practice_movie.R
@@ -31,21 +32,24 @@ class MainActivity : AppCompatActivity() {
             .build()
             .inject(this)
 
-        popularMovieViewModel = ViewModelProviders.of(this,movieViewModelFactory).get(PopularMovieViewModel::class.java)
+        popularMovieViewModel = ViewModelProviders.of(this, movieViewModelFactory)
+            .get(PopularMovieViewModel::class.java)
         popularMovieViewModel.getMoviePopular()
-        popularMovieViewModel.moviepopular.observe(this,Observer<Movie_Popular>{movie ->
+        popularMovieViewModel.moviepopular.observe(this, Observer<Movie_Popular> { movie ->
             Log.d("movieTitle", movie.results[1].original_title)
             movieAdapter(movie)
         })
     }
 
-    private fun movieAdapter(movie:Movie_Popular){
-        val adapter = MovieAdapter(movie,object:OnMovieClickListener{
+    private fun movieAdapter(movie: Movie_Popular) {
+        val adapter = MovieAdapter(movie, object : OnMovieClickListener {
             override fun onMovieClicked(results: Results) {
-
+                val intent = Intent(this@MainActivity, MovieDetailsActivity::class.java)
+                intent.putExtra("movieId", results.id)
+                startActivity(intent)
             }
         })
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = adapter
     }
 }
