@@ -1,7 +1,7 @@
 package com.moviedb.practice_movie.di
 
-import com.moviedb.practice_movie.view.MainActivity
-import com.moviedb.practice_movie.view.MovieDetailsActivity
+import com.moviedb.practice_movie.ui.MainActivity
+import com.moviedb.practice_movie.ui.MovieDetailsActivity
 import dagger.Component
 import javax.inject.Singleton
 

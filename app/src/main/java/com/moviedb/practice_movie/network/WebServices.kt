@@ -10,9 +10,9 @@ import retrofit2.http.Query
 interface WebServices {
 
     @GET("popular")
-    fun getPopularMovies(@Query("api_key") apikey:String) : Single<Movie_Popular>
+    fun getPopularMovies(@Query("api_key") apikey: String): Single<Movie_Popular>
 
     @GET("{movie_id}")
-    fun getMovieDetails(@Path("movie_id") movieId:Int,@Query("api_key") apikey: String) : Single<Movie_Details>
+    fun getMovieDetails(@Path("movie_id") movieId: Int, @Query("api_key") apikey: String): Single<Movie_Details>
 
 }

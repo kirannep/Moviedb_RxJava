@@ -1,14 +1,16 @@
-package com.moviedb.practice_movie.view
+package com.moviedb.practice_movie.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import com.moviedb.practice_movie.MovieViewModelFactory
-import com.moviedb.practice_movie.PopularMovieViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.moviedb.practice_movie.viewmodel.MovieViewModelFactory
+import com.moviedb.practice_movie.viewmodel.PopularMovieViewModel
 import com.moviedb.practice_movie.R
 import com.moviedb.practice_movie.data.movie_popular.Movie_Popular
 import com.moviedb.practice_movie.data.movie_popular.Results
@@ -37,7 +39,12 @@ class MainActivity : AppCompatActivity() {
         popularMovieViewModel.getMoviePopular()
         popularMovieViewModel.moviepopular.observe(this, Observer<Movie_Popular> { movie ->
             Log.d("movieTitle", movie.results[1].original_title)
+            popular_movies_pg.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
             movieAdapter(movie)
+        })
+        popularMovieViewModel.loadingState.observe(this,Observer<PopularMovieViewModel.LoadingState>{
+            when(it){ is PopularMovieViewModel.LoadingState.LOADING -> displayProgressBar()}
         })
     }
 
@@ -51,5 +58,10 @@ class MainActivity : AppCompatActivity() {
         })
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = adapter
+    }
+
+    private fun displayProgressBar(){
+        popular_movies_pg.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
     }
 }

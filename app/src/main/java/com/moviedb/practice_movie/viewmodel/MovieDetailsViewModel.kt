@@ -1,4 +1,4 @@
-package com.moviedb.practice_movie
+package com.moviedb.practice_movie.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +16,7 @@ class MovieDetailsViewModel @Inject constructor(private val repository: MovieRep
     private val compositeDisposable = CompositeDisposable()
 
     fun getMovieDetails(movieId: Int) {
+        loadingState.value = LoadingState.LOADING
         compositeDisposable.add(
             repository.getMovieDetails(movieId, Constants.API_KEY).subscribe({ movieInfo ->
                 movieDetails.value = movieInfo
@@ -23,5 +24,11 @@ class MovieDetailsViewModel @Inject constructor(private val repository: MovieRep
                 error.value = it.localizedMessage
             })
         )
+    }
+
+    val loadingState = MutableLiveData<LoadingState>()
+
+    sealed class LoadingState{
+        object LOADING:LoadingState()
     }
 }

@@ -1,4 +1,4 @@
-package com.moviedb.practice_movie.view
+package com.moviedb.practice_movie.ui
 
 import android.view.LayoutInflater
 import android.view.View

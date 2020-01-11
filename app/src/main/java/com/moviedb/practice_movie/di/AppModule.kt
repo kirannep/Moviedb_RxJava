@@ -1,7 +1,7 @@
 package com.moviedb.practice_movie.di
 
-import com.moviedb.practice_movie.MovieDetailsViewModelFactory
-import com.moviedb.practice_movie.MovieViewModelFactory
+import com.moviedb.practice_movie.viewmodel.MovieDetailsViewModelFactory
+import com.moviedb.practice_movie.viewmodel.MovieViewModelFactory
 import com.moviedb.practice_movie.common.Constants
 import com.moviedb.practice_movie.network.WebServices
 import com.moviedb.practice_movie.repository.MovieRepository
@@ -65,7 +65,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideMovieDetailsViewModelFactory(movieRepository: MovieRepository):MovieDetailsViewModelFactory{
+    fun provideMovieDetailsViewModelFactory(movieRepository: MovieRepository): MovieDetailsViewModelFactory {
         return MovieDetailsViewModelFactory(movieRepository)
     }
 }
