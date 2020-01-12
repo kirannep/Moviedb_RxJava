@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moviedb.practice_movie.R
 import com.moviedb.practice_movie.common.Constants
 import com.moviedb.practice_movie.data.movie_popular.Movie_Popular
-import com.moviedb.practice_movie.data.movie_popular.Results
+import com.moviedb.practice_movie.data.movie_popular.Movies
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_card_view.view.*
 
@@ -30,9 +30,9 @@ class MovieAdapter(private val moviePopular: Movie_Popular,private val listener:
 }
 
 class MovieViewHolder(view: View):RecyclerView.ViewHolder(view){
-    fun bind(results: Results,listener: OnMovieClickListener){
+    fun bind(movies: Movies, listener: OnMovieClickListener){
         itemView.setOnClickListener {
-            listener.onMovieClicked(results)
+            listener.onMovieClicked(movies)
         }
     }
     val tvTitle = view.movie_title_tv
@@ -40,5 +40,5 @@ class MovieViewHolder(view: View):RecyclerView.ViewHolder(view){
 }
 
 interface OnMovieClickListener{
-    fun onMovieClicked(results: Results)
+    fun onMovieClicked(movies: Movies)
 }

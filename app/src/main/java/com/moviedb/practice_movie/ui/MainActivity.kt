@@ -8,12 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.moviedb.practice_movie.viewmodel.MovieViewModelFactory
 import com.moviedb.practice_movie.viewmodel.PopularMovieViewModel
 import com.moviedb.practice_movie.R
 import com.moviedb.practice_movie.data.movie_popular.Movie_Popular
-import com.moviedb.practice_movie.data.movie_popular.Results
+import com.moviedb.practice_movie.data.movie_popular.Movies
 import com.moviedb.practice_movie.di.AppModule
 import com.moviedb.practice_movie.di.DaggerAppComponent
 import kotlinx.android.synthetic.main.activity_main.*
@@ -39,8 +38,7 @@ class MainActivity : AppCompatActivity() {
         popularMovieViewModel.getMoviePopular()
         popularMovieViewModel.moviepopular.observe(this, Observer<Movie_Popular> { movie ->
             Log.d("movieTitle", movie.results[1].original_title)
-            popular_movies_pg.visibility = View.GONE
-            recyclerView.visibility = View.VISIBLE
+            hideProgressBar()
             movieAdapter(movie)
         })
         popularMovieViewModel.loadingState.observe(this,Observer<PopularMovieViewModel.LoadingState>{
@@ -50,9 +48,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun movieAdapter(movie: Movie_Popular) {
         val adapter = MovieAdapter(movie, object : OnMovieClickListener {
-            override fun onMovieClicked(results: Results) {
+            override fun onMovieClicked(movies: Movies) {
                 val intent = Intent(this@MainActivity, MovieDetailsActivity::class.java)
-                intent.putExtra("movieId", results.id)
+                intent.putExtra("movieId", movies.id)
                 startActivity(intent)
             }
         })
@@ -63,5 +61,10 @@ class MainActivity : AppCompatActivity() {
     private fun displayProgressBar(){
         popular_movies_pg.visibility = View.VISIBLE
         recyclerView.visibility = View.GONE
+    }
+
+    private fun hideProgressBar(){
+        popular_movies_pg.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
     }
 }

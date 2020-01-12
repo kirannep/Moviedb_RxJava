@@ -2,7 +2,7 @@ package com.moviedb.practice_movie.data.movie_popular
 
 import com.google.gson.annotations.SerializedName
 
-data class Results (
+data class Movies (
 
 	@SerializedName("popularity") val popularity : Double,
 	@SerializedName("vote_count") val vote_count : Int,
