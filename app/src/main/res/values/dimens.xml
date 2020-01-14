@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardview_constraint_layout_width">320dp</dimen>
+    <dimen name="cardview_constraint_layout_height">200dp</dimen>
+    <dimen name="movie_title_tv_width">137dp</dimen>
+    <dimen name="movie_title_tv_height">54dp</dimen>
+    <dimen name="movie_title_start_margin">92dp</dimen>
+    <dimen name="movie_title_top_margin">16dp</dimen>
+    <dimen name="movie_title_text_size">14sp</dimen>
+    <dimen name="movie_img_width">123dp</dimen>
+    <dimen name="movie_img_height">102dp</dimen>
+    <dimen name="movie_img_start_margin">100dp</dimen>
+    <dimen name="movie_img_bottom_margin">16dp</dimen>
+    <dimen name="movieDetails_title_width">256dp</dimen>
+    <dimen name="movieDetails_title_height">74dp</dimen>
+    <dimen name="movieDetails_title_top_margin">32dp</dimen>
+    <dimen name="movieDetails_title_text_size">20sp</dimen>
+    <dimen name="movieDetails_img_width">244dp</dimen>
+    <dimen name="movieDetails_img_height">207dp</dimen>
+    <dimen name="movieDetails_top_margin">40dp</dimen>
+    <dimen name="moveDetails_overview_tv_width">291dp</dimen>
+    <dimen name="movieDetails_overview_tv_height">162dp</dimen>
+    <dimen name="movieDetails_overview_bottom_margin">52dp</dimen>
+</resources>

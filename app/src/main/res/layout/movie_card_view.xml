@@ -10,19 +10,19 @@
     app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="320dp"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/cardview_constraint_layout_width"
+        android:layout_height="@dimen/cardview_constraint_layout_height"
         android:layout_gravity="center">
 
         <TextView
             android:id="@+id/movie_title_tv"
-            android:layout_width="137dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="92dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="@dimen/movie_title_tv_width"
+            android:layout_height="@dimen/movie_title_tv_height"
+            android:layout_marginStart="@dimen/movie_title_start_margin"
+            android:layout_marginTop="@dimen/movie_title_top_margin"
             android:textAlignment="center"
             android:textColorHint="@color/cardview_shadow_end_color"
-            android:textSize="14sp"
+            android:textSize="@dimen/movie_title_text_size"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,10 +30,10 @@
 
         <ImageView
             android:id="@+id/movie_iv"
-            android:layout_width="123dp"
-            android:layout_height="102dp"
-            android:layout_marginStart="100dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="@dimen/movie_img_width"
+            android:layout_height="@dimen/movie_img_height"
+            android:layout_marginStart="@dimen/movie_img_start_margin"
+            android:layout_marginBottom="@dimen/movie_img_bottom_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:srcCompat="@tools:sample/avatars[1]" />
