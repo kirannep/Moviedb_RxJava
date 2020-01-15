@@ -36,6 +36,9 @@
             android:layout_marginBottom="@dimen/movie_img_bottom_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription"
             tools:srcCompat="@tools:sample/avatars[1]" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -27,6 +29,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        getWindow().setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar()?.hide();
 
         DaggerAppComponent.builder()
             .appModule(AppModule())
@@ -36,17 +42,22 @@ class MainActivity : AppCompatActivity() {
         popularMovieViewModel = ViewModelProviders.of(this, movieViewModelFactory)
             .get(PopularMovieViewModel::class.java)
         popularMovieViewModel.getMoviePopular()
-        popularMovieViewModel.moviepopular.observe(this, Observer<Movie_Popular> { movie ->
-            Log.d("movieTitle", movie.results[1].original_title)
+        popularMovieViewModel.movies.observe(this, Observer<List<Movies>> { movie ->
+//            Log.d("movieTitle", movie[0].title)
             hideProgressBar()
             movieAdapter(movie)
         })
         popularMovieViewModel.loadingState.observe(this,Observer<PopularMovieViewModel.LoadingState>{
             when(it){ is PopularMovieViewModel.LoadingState.LOADING -> displayProgressBar()}
         })
+
+        btn_search.setOnClickListener {
+            popularMovieViewModel.filterList(etQuery.text.toString().toLowerCase())
+            Toast.makeText(this,"search clicked",Toast.LENGTH_SHORT).show()
+        }
     }
 
-    private fun movieAdapter(movie: Movie_Popular) {
+    private fun movieAdapter(movie: List<Movies>) {
         val adapter = MovieAdapter(movie, object : OnMovieClickListener {
             override fun onMovieClicked(movies: Movies) {
                 val intent = Intent(this@MainActivity, MovieDetailsActivity::class.java)

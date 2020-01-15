@@ -21,4 +21,5 @@
     <dimen name="moveDetails_overview_tv_width">291dp</dimen>
     <dimen name="movieDetails_overview_tv_height">162dp</dimen>
     <dimen name="movieDetails_overview_bottom_margin">52dp</dimen>
+    <dimen name="recycler_view_top_margin">55dp</dimen>
 </resources>
