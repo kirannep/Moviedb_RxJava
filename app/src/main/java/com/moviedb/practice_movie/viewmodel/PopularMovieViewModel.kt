@@ -27,13 +27,14 @@ class PopularMovieViewModel @Inject constructor(private val movieRepository: Mov
                     fullmovielist.addAll(movie.results)
                 }, {
                     error.value = it.localizedMessage
-                }
-                )
+                    loadingState.value = LoadingState.FAILURE
+                })
         )
     }
 
     sealed class LoadingState {
         object LOADING : LoadingState()
+        object FAILURE : LoadingState()
     }
 
     fun filterList(keyword: String) {

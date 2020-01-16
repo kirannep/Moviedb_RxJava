@@ -2,7 +2,6 @@ package com.moviedb.practice_movie.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.moviedb.practice_movie.viewmodel.MovieViewModelFactory
 import com.moviedb.practice_movie.viewmodel.PopularMovieViewModel
 import com.moviedb.practice_movie.R
-import com.moviedb.practice_movie.data.movie_popular.Movie_Popular
 import com.moviedb.practice_movie.data.movie_popular.Movies
 import com.moviedb.practice_movie.di.AppModule
 import com.moviedb.practice_movie.di.DaggerAppComponent
@@ -43,18 +41,28 @@ class MainActivity : AppCompatActivity() {
             .get(PopularMovieViewModel::class.java)
         popularMovieViewModel.getMoviePopular()
         popularMovieViewModel.movies.observe(this, Observer<List<Movies>> { movie ->
-//            Log.d("movieTitle", movie[0].title)
             hideProgressBar()
             movieAdapter(movie)
         })
         popularMovieViewModel.loadingState.observe(this,Observer<PopularMovieViewModel.LoadingState>{
-            when(it){ is PopularMovieViewModel.LoadingState.LOADING -> displayProgressBar()}
+            when(it){
+                 PopularMovieViewModel.LoadingState.LOADING -> displayProgressBar()
+                 PopularMovieViewModel.LoadingState.FAILURE -> errordisplay()
+            }
+        })
+        popularMovieViewModel.error.observe(this,Observer<String>{
+            errormsg_tv.text = it
         })
 
         btn_search.setOnClickListener {
             popularMovieViewModel.filterList(etQuery.text.toString().toLowerCase())
             Toast.makeText(this,"search clicked",Toast.LENGTH_SHORT).show()
         }
+
+        btn_retry.setOnClickListener {
+            popularMovieViewModel.getMoviePopular()
+        }
+
     }
 
     private fun movieAdapter(movie: List<Movies>) {
@@ -78,4 +86,11 @@ class MainActivity : AppCompatActivity() {
         popular_movies_pg.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
     }
+
+    private fun errordisplay(){
+        popular_movies_pg.visibility = View.GONE
+        errormsg_tv.visibility = View.VISIBLE
+        btn_retry.visibility = View.VISIBLE
+    }
+
 }
