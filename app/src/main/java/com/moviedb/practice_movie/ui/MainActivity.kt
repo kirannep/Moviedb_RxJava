@@ -29,7 +29,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
         getSupportActionBar()?.hide();
 
         DaggerAppComponent.builder()
@@ -41,26 +42,34 @@ class MainActivity : AppCompatActivity() {
             .get(PopularMovieViewModel::class.java)
         popularMovieViewModel.getMoviePopular()
         popularMovieViewModel.movies.observe(this, Observer<List<Movies>> { movie ->
-            hideProgressBar()
             movieAdapter(movie)
         })
-        popularMovieViewModel.loadingState.observe(this,Observer<PopularMovieViewModel.LoadingState>{
-            when(it){
-                 PopularMovieViewModel.LoadingState.LOADING -> displayProgressBar()
-                 PopularMovieViewModel.LoadingState.FAILURE -> errordisplay()
-            }
-        })
-        popularMovieViewModel.error.observe(this,Observer<String>{
+        popularMovieViewModel.loadingState.observe(
+            this,
+            Observer<PopularMovieViewModel.LoadingState> {
+                resetContent()
+                when (it) {
+                    PopularMovieViewModel.LoadingState.LOADING -> popular_movies_pg.visibility =
+                        View.VISIBLE
+                    PopularMovieViewModel.LoadingState.FAILURE -> errormsg_tv.visibility =
+                        View.VISIBLE
+                    PopularMovieViewModel.LoadingState.SUCCESS -> recyclerView.visibility =
+                        View.VISIBLE
+                }
+            })
+        popularMovieViewModel.error.observe(this, Observer<String> {
             errormsg_tv.text = it
+            btn_retry.visibility = View.VISIBLE
         })
 
         btn_search.setOnClickListener {
             popularMovieViewModel.filterList(etQuery.text.toString().toLowerCase())
-            Toast.makeText(this,"search clicked",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "search clicked", Toast.LENGTH_SHORT).show()
         }
 
         btn_retry.setOnClickListener {
             popularMovieViewModel.getMoviePopular()
+            btn_retry.visibility = View.GONE
         }
 
     }
@@ -77,20 +86,10 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
-    private fun displayProgressBar(){
-        popular_movies_pg.visibility = View.VISIBLE
+    private fun resetContent() {
         recyclerView.visibility = View.GONE
-    }
-
-    private fun hideProgressBar(){
         popular_movies_pg.visibility = View.GONE
-        recyclerView.visibility = View.VISIBLE
-    }
-
-    private fun errordisplay(){
-        popular_movies_pg.visibility = View.GONE
-        errormsg_tv.visibility = View.VISIBLE
-        btn_retry.visibility = View.VISIBLE
+        errormsg_tv.visibility = View.GONE
     }
 
 }

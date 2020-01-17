@@ -21,11 +21,13 @@ class PopularMovieViewModel @Inject constructor(private val movieRepository: Mov
         loadingState.value = LoadingState.LOADING
         compositeDisposable.add(
             movieRepository.getMoviesPopular(Constants.API_KEY)
-                .subscribe({ movie ->
-                    movies.value = movie.results
+                .subscribe({ movieresponse ->
+                    movies.value = movieresponse.results
                     fullmovielist.clear()
-                    fullmovielist.addAll(movie.results)
+                    fullmovielist.addAll(movieresponse.results)
+                    loadingState.value = LoadingState.SUCCESS
                 }, {
+                    it.printStackTrace()
                     error.value = it.localizedMessage
                     loadingState.value = LoadingState.FAILURE
                 })
@@ -34,6 +36,7 @@ class PopularMovieViewModel @Inject constructor(private val movieRepository: Mov
 
     sealed class LoadingState {
         object LOADING : LoadingState()
+        object SUCCESS : LoadingState()
         object FAILURE : LoadingState()
     }
 

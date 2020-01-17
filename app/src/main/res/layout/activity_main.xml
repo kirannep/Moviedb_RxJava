@@ -47,6 +47,7 @@
         android:layout_width="416dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="@id/appbar"
         app:layout_constraintTop_toBottomOf="@id/appbar" />
 
@@ -68,18 +69,19 @@
         android:layout_marginBottom="136dp"
         android:text="Refresh"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/errormsg_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginBottom="32dp"
-        android:text="Error"
+        android:layout_width="304dp"
+        android:layout_height="103dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="80dp"
+        android:gravity="center"
+        tools:text="Error"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_retry"
         app:layout_constraintEnd_toEndOf="parent"
